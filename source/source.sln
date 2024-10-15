@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "zag-backend", "zag-backend.csproj", "{25345AED-EF7E-4276-9F62-B2A618FDE748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "source", "source.csproj", "{6EFF2CCD-34A3-4EF0-95FE-31202ADEF6B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{25345AED-EF7E-4276-9F62-B2A618FDE748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25345AED-EF7E-4276-9F62-B2A618FDE748}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25345AED-EF7E-4276-9F62-B2A618FDE748}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25345AED-EF7E-4276-9F62-B2A618FDE748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EFF2CCD-34A3-4EF0-95FE-31202ADEF6B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EFF2CCD-34A3-4EF0-95FE-31202ADEF6B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EFF2CCD-34A3-4EF0-95FE-31202ADEF6B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EFF2CCD-34A3-4EF0-95FE-31202ADEF6B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7DE2C55C-886B-4ADB-BEB3-F1B276770DC2}
+		SolutionGuid = {8F7CBE31-FC9D-4CF7-8A17-E1426D9889F7}
 	EndGlobalSection
 EndGlobal
