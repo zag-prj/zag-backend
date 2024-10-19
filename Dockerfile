@@ -17,5 +17,16 @@ WORKDIR /app
 
 COPY --from=build-env /out .
 
+# Set environment variables
+ENV ASP_PORT=8080
+ENV POSTGRES_HOST=postgres
+ENV POSTGRES_PORT=5432
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_DB=postgres
+
+# Expose the port
+EXPOSE $ASP_PORT
+
 # Set the entry point for the application
-ENTRYPOINT ["dotnet", "ConsoleApp1.dll"]
+ENTRYPOINT ["dotnet", "source.dll"]
