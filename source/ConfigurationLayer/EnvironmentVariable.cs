@@ -2,11 +2,12 @@ using System;
 using DotNetEnv;
 
 
-namespace ConsoleApp1;
+namespace source.ConfigurationLayer;
 
 public class EnvironmentVariable
 {
     public static string TEST => Environment.GetEnvironmentVariable("TEST") ?? string.Empty;
+    public static int ASP_PORT => int.TryParse(Environment.GetEnvironmentVariable("ASP_PORT"), out int port) ? port : 8080;
 
     static EnvironmentVariable()
     {
