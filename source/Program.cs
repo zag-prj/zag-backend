@@ -4,6 +4,8 @@ using source.DataAccessLayer;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+//add delay to wait for postgress to start
+System.Threading.Thread.Sleep(10000);
 // Initialize database connection
 using var db = new Postgress();
 
