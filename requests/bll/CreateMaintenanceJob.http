@@ -1,0 +1,14 @@
+@URI = {{protocol}}://{{host}}:{{port}}/api
+
+# @name create
+POST {{URI}}/job
+Content-Type: application/json
+
+{
+    "ClientId": "1690d949-7a82-40d3-ab37-4080a5529ed3",
+    "TechnicianId": "1690d949-7a82-40d3-ab37-4080a5529ed3"
+}
+
+### get based on location header
+
+Get {{create.response.headers.location}}

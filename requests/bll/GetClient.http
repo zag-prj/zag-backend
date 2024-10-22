@@ -1,0 +1,7 @@
+@URI = {{protocol}}://{{host}}:{{port}}/api
+
+# TODO: create test record in db
+@ID = id here
+
+GET {{URI}}/client/{{ID}}
+

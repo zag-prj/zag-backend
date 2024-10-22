@@ -1,0 +1,16 @@
+@URI = {{protocol}}://{{host}}:{{port}}/api
+
+# @name create
+POST {{URI}}/client
+Content-Type: application/json
+
+{
+    "CompanyName": "John Doe Inc",
+    "Address": "John Doe Lane",
+    "Billing": "idk",
+    "Password": "you tell me"
+}
+
+### get based on location header
+
+Get {{create.response.headers.location}}
