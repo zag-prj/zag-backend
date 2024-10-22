@@ -2,7 +2,7 @@ namespace BusinessLogic.Domain;
 
 public enum MaintenanceJobState
 {
-    Pending,
+    Pending = 1,
     Ongoing,
     Completed,
 }

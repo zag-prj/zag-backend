@@ -41,7 +41,11 @@ public class ContractController(ContractService service) : ControllerBase
     }
 }
 
-public record CreateContractRequest(Guid ClientId, DateTime Until, decimal PriceMonthly)
+public record CreateContractRequest(
+    Guid ClientId,
+    DateTime Until,
+    decimal PriceMonthly
+)
 {
     public Contract ToDomain()
     {
@@ -55,7 +59,13 @@ public record CreateContractRequest(Guid ClientId, DateTime Until, decimal Price
 
 }
 
-public record ContractResponse(Guid Id, ContractState State, DateTime Issued, DateTime Until, decimal PriceMonthly)
+public record ContractResponse(
+    Guid Id,
+    ContractState State,
+    DateTime Issued,
+    DateTime Until,
+    decimal PriceMonthly
+)
 {
     public static ContractResponse FromDomain(Contract contract)
     {

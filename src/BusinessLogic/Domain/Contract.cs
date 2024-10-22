@@ -2,7 +2,7 @@ namespace BusinessLogic.Domain;
 
 public enum ContractState
 {
-    Valid,
+    Valid = 1,
     Breach,
     Completed,
 }

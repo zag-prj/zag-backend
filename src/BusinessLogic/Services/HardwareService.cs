@@ -35,3 +35,17 @@ public class SpecService
         return Repository.Find(x => x.Id == id);
     }
 }
+
+public class HardwareSpecService {
+    private static readonly List<HardwareSpec> Repository = [];
+
+    public void Create(HardwareSpec hSpec) {
+        // store hardware spec in database
+        Repository.Add(hSpec);
+    }
+
+    public HardwareSpec? Get(Guid hardwareId, Guid specId) {
+        // find hardware spec in database
+        return Repository.Find(x => (x.HardwareId == hardwareId) && (x.SpecId == specId));
+    }
+}

@@ -8,7 +8,7 @@ public enum TechnicianRole
 
 public enum TechnicianState
 {
-    Available,
+    Available = 1,
     Unavailable,
     Suspended,
 }

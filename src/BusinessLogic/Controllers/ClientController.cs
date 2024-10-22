@@ -36,7 +36,7 @@ public class ClientController(ClientService service) : ControllerBase
 
         // return 200 ok response
         return client is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Product not found")
+        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Client not found")
         : Ok(ClientResponse.FromDomain(client));
     }
 }

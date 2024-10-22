@@ -2,7 +2,7 @@ namespace BusinessLogic.Domain;
 
 public enum HardwareState
 {
-    Running,
+    Running = 1,
     Down,
     Maintenance,
 }

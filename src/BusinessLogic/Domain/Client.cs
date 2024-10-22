@@ -2,7 +2,7 @@ namespace BusinessLogic.Domain;
 
 public enum ClientState
 {
-    Active,
+    Active = 1,
     Inactive,
     Suspended,
 }
