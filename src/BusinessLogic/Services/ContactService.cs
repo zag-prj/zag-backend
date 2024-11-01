@@ -1,20 +1,40 @@
 using BusinessLogic.Domain;
+using source.DataAccessLayer;
+using Npgsql;
 
-namespace BusinessLogic.Services;
-
-public class ContactService
+namespace BusinessLogic.Services
 {
-    private static readonly List<Contact> ContactRepository = [];
-
-    public void Create(Contact contact)
+    public class ContactService
     {
-        // store contact in database
-        ContactRepository.Add(contact);
-    }
+        private readonly Postgress _postgress;
 
-    public Contact? Get(Guid id)
-    {
-        // find contact in database
-        return ContactRepository.Find(x => x.Id == id);
+        public ContactService(Postgress postgress)
+        {
+            _postgress = postgress;
+        }
+
+        public async Task<Contact?> Get(Guid id)
+        {
+            var query = SqlQueries.GetContactById;
+            var parameters = new[] { new NpgsqlParameter("@contactId", id) };
+
+            // Executing the query
+            using (var reader = await _postgress.ExecuteQueryAsync(query, parameters))
+            {
+                if (await reader.ReadAsync())
+                {
+                    return new Contact
+                    {
+                        Id = reader.GetGuid(0),
+                        ClientId = reader.GetGuid(1),
+                        Name = reader.GetString(2),
+                        Surname = reader.GetString(3),
+                        PhoneNumber = reader.GetString(4),
+                        Email = reader.GetString(5)
+                    };
+                }
+                return null;
+            }
+        }
     }
 }

@@ -1,20 +1,40 @@
 using BusinessLogic.Domain;
+using source.DataAccessLayer;
+using Npgsql;
 
-namespace BusinessLogic.Services;
-
-public class ContractService
+namespace BusinessLogic.Services
 {
-    private static readonly List<Contract> ContractRepository = [];
-
-    public void Create(Contract contract)
+    public class ContractService
     {
-        // store contract in database
-        ContractRepository.Add(contract);
-    }
+        private readonly Postgress _postgress;
 
-    public Contract? Get(Guid id)
-    {
-        // find contract in database
-        return ContractRepository.Find(x => x.Id == id);
+        public ContractService(Postgress postgress)
+        {
+            _postgress = postgress;
+        }
+
+        public async Task<Contract?> Get(Guid id)
+        {
+            var query = SqlQueries.GetContractById;
+            var parameters = new[] { new NpgsqlParameter("@contractId", id) };
+
+            // Executing the query
+            using (var reader = await _postgress.ExecuteQueryAsync(query, parameters))
+            {
+                if (await reader.ReadAsync())
+                {
+                    return new Contract
+                    {
+                        Id = reader.GetGuid(0),
+                        State = (ContractState)reader.GetInt32(1),
+                        ClientId = reader.GetGuid(2),
+                        Issued = reader.GetDateTime(3),
+                        Until = reader.GetDateTime(4),
+                        PriceMonthly = reader.GetDecimal(5)
+                    };
+                }
+                return null;
+            }
+        }
     }
 }

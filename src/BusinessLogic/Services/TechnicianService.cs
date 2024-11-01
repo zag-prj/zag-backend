@@ -1,20 +1,41 @@
 using BusinessLogic.Domain;
 
-namespace BusinessLogic.Services;
+using System.Data;
+using System.Threading.Tasks;
 
-public class TechnicianService
+namespace BusinessLogic.Services
 {
-    private static readonly List<Technician> TechnicianRepository = [];
-
-    public void Create(Technician technician)
+    public class TechnicianService
     {
-        // store technician in database
-        TechnicianRepository.Add(technician);
-    }
+        private readonly Postgress _db;
 
-    public Technician? Get(Guid id)
-    {
-        // find technician in database
-        return TechnicianRepository.Find(x => x.Id == id);
+        public TechnicianService(Postgress db)
+        {
+            _db = db;
+        }
+
+        public async Task<Technician?> Get(Guid id)
+        {
+            var query = SqlQueries.GetTechnicianById;
+            var parameters = new { technicianId = id };
+
+            using (var reader = await _db.QueryAsync(query, parameters))
+            {
+                if (await reader.ReadAsync())
+                {
+                    return new Technician
+                    {
+                        Id = reader.GetGuid(0),
+                        State = (TechnicianState)reader.GetInt32(1), 
+                        Role = (TechnicianRole)reader.GetInt32(2), 
+                        Name = reader.GetString(3),
+                        Surname = reader.GetString(4),
+                        Hired = reader.GetDateTime(5),
+                        Salary = reader.GetDecimal(6)
+                    };
+                }
+            }
+            return null; 
+        }
     }
 }

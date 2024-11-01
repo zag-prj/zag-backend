@@ -1,51 +1,100 @@
 using BusinessLogic.Domain;
 
-namespace BusinessLogic.Services;
+using System.Data;
+using System.Threading.Tasks;
 
-public class HardwareService
+namespace BusinessLogic.Services
 {
-    private static readonly List<Hardware> Repository = [];
-
-    public void Create(Hardware hardware)
+    public class HardwareService
     {
-        // store hardware in database
-        Repository.Add(hardware);
+        private readonly Postgress _db;
+
+        public HardwareService(Postgress db)
+        {
+            _db = db;
+        }
+
+        public async Task<Hardware?> Get(Guid id)
+        {
+            var query = SqlQueries.GetHardwareById; 
+            var parameters = new { hardwareId = id };
+
+            using (var reader = await _db.QueryAsync(query, parameters))
+            {
+                if (await reader.ReadAsync())
+                {
+                    return new Hardware
+                    {
+                        Id = reader.GetGuid(0),
+                        State = (HardwareState)reader.GetInt32(1),
+                        ContractId = reader.GetGuid(2),
+                        RefName = reader.GetString(3),
+                        Value = reader.GetDecimal(4)
+                    };
+                }
+            }
+            return null;
+        }
     }
 
-    public Hardware? Get(Guid id)
+    public class SpecService
     {
-        // find hardware in database
-        return Repository.Find(x => x.Id == id);
+        private readonly Postgress _db;
+
+        public SpecService(Postgress db)
+        {
+            _db = db;
+        }
+
+        public async Task<Spec?> Get(Guid id)
+        {
+            var query = SqlQueries.GetSpecById; 
+            var parameters = new { specId = id };
+
+            using (var reader = await _db.QueryAsync(query, parameters))
+            {
+                if (await reader.ReadAsync())
+                {
+                    return new Spec
+                    {
+                        Id = reader.GetGuid(0),
+                        RefName = reader.GetString(1),
+                        Value = reader.GetDecimal(2)
+                    };
+                }
+            }
+            return null;
+        }
+    }
+
+    public class HardwareSpecService
+    {
+        private readonly Postgress _db;
+
+        public HardwareSpecService(Postgress db)
+        {
+            _db = db;
+        }
+
+        public async Task<HardwareSpec?> Get(Guid hardwareId, Guid specId)
+        {
+            var query = SqlQueries.GetHardwareSpec; 
+            var parameters = new { hardwareId, specId };
+
+            using (var reader = await _db.QueryAsync(query, parameters))
+            {
+                if (await reader.ReadAsync())
+                {
+                    return new HardwareSpec
+                    {
+                        HardwareId = reader.GetGuid(0),
+                        SpecId = reader.GetGuid(1),
+                        Count = reader.GetInt32(2)
+                    };
+                }
+            }
+            return null;
+        }
     }
 }
 
-public class SpecService
-{
-    private static readonly List<Spec> Repository = [];
-
-    public void Create(Spec spec)
-    {
-        // store spec in database
-        Repository.Add(spec);
-    }
-
-    public Spec? Get(Guid id)
-    {
-        // find spec in database
-        return Repository.Find(x => x.Id == id);
-    }
-}
-
-public class HardwareSpecService {
-    private static readonly List<HardwareSpec> Repository = [];
-
-    public void Create(HardwareSpec hSpec) {
-        // store hardware spec in database
-        Repository.Add(hSpec);
-    }
-
-    public HardwareSpec? Get(Guid hardwareId, Guid specId) {
-        // find hardware spec in database
-        return Repository.Find(x => (x.HardwareId == hardwareId) && (x.SpecId == specId));
-    }
-}
