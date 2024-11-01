@@ -128,5 +128,49 @@ namespace source.DataAccessLayer
                 FOREIGN KEY (state) REFERENCES maintanance_job_state (id)
             );
         ";
+
+        //Creating SQL queries for retrieving data            
+
+        public const string GetClientById = @"
+            SELECT id, state, company_name, location, billing, password
+            FROM client 
+            WHERE id = @clientId;";
+
+        public const string GetContactById = @"
+            SELECT id, client_id, name, surname, phone_number, email 
+            FROM contact 
+            WHERE id = @contactId;";
+
+        public const string GetContractById = @"
+            SELECT id, state, client_id, issued, until, price_monthly 
+            FROM contract 
+            WHERE id = @contractId;";
+
+        public const string GetHardwareById = @"
+            SELECT id, state, contract_id, ref_name, value 
+            FROM hardware 
+            WHERE id = @hardwareId;";
+
+        public const string GetSpecById = @"
+            SELECT id, value, name 
+            FROM spec 
+            WHERE id = @specId;";
+
+        public const string GetHardwareSpec = @"
+            SELECT hardware_id, spec_id, count 
+            FROM hardware_spec 
+            WHERE hardware_id = @hardwareId AND spec_id = @specId;";
+
+        public const string GetMaintenanceJob = @"
+            SELECT client_id, technician_id, state, requested, started, done 
+            FROM maintenance_job 
+            WHERE client_id = @clientId AND technician_id = @technicianId;";
+
+        public const string GetTechnicianById = @"
+            SELECT id, state, role, name, surname, hired, salary 
+            FROM technician 
+            WHERE id = @technicianId;";
+
+       
     }
 }
