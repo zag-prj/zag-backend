@@ -1,9 +1,6 @@
 using source.BusinessLogic.Domain;
 using source.DataAccessLayer;
 
-using System.Data;
-using System.Threading.Tasks;
-
 namespace source.BusinessLogic.Services
 {
     public class HardwareService

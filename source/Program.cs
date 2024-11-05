@@ -1,5 +1,5 @@
 using source.ConfigurationLayer;
-//using source.DataAccessLayer;
+using source.DataAccessLayer;
 using source.BusinessLogic.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddScoped<TechnicianService>();
     builder.Services.AddScoped<ContactService>();
     builder.Services.AddScoped<MaintenanceJobService>();
+    builder.Services.AddScoped<Postgress>();
     builder.Services.AddControllers();
 }
 var app = builder.Build();

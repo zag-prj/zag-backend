@@ -1,14 +1,12 @@
 using source.BusinessLogic.Domain;
 using source.DataAccessLayer;
-using System;
-using System.Threading.Tasks;
 using Npgsql;
 
 namespace source.BusinessLogic.Services
 {
     public class ClientService
     {
-        private readonly Postgress _postgress;
+        private Postgress _postgress;
         
 
         public ClientService(Postgress postgress)
