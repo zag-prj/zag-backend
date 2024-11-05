@@ -171,6 +171,5 @@ namespace source.DataAccessLayer
             FROM technician 
             WHERE id = @technicianId;";
 
-       
     }
 }

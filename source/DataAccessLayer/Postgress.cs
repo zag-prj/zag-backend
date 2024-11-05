@@ -1,6 +1,5 @@
 using System.Data;
 using Npgsql;
-// Link source/Configuration layer to Postgress class
 using source.ConfigurationLayer;
 
 namespace source.DataAccessLayer
