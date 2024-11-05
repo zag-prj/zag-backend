@@ -9,6 +9,7 @@ namespace source.BusinessLogic.Services
     public class ClientService
     {
         private readonly Postgress _postgress;
+        
 
         public ClientService(Postgress postgress)
         {

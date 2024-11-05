@@ -18,7 +18,7 @@ public class HardwareController(HardwareService service) : ControllerBase
         var hardware = request.ToDomain();
 
         // invoking the use case
-        _service.Create(hardware);
+        //_service.Create(hardware);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -29,15 +29,15 @@ public class HardwareController(HardwareService service) : ControllerBase
     }
 
     [HttpGet("id:guid")]
-    public IActionResult Get(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         // invoking the use case
-        Hardware? hardware = _service.Get(id);
+        Hardware? hardware = await _service.Get(id);
 
         // return 200 ok response
         return hardware is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Hardware not found")
-        : Ok(HardwareResponse.FromDomain(hardware));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Hardware not found")
+            : Ok(HardwareResponse.FromDomain(hardware));
     }
 }
 
@@ -91,7 +91,7 @@ public class SpecController(SpecService service) : ControllerBase
         var spec = request.ToDomain();
 
         // invoking the use case
-        _service.Create(spec);
+        //_service.Create(spec);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -102,15 +102,15 @@ public class SpecController(SpecService service) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public IActionResult Get(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         // invoking the use case
-        Spec? spec = _service.Get(id);
+        Spec? spec = await _service.Get(id);
 
         // return 200 ok response
         return spec is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Spec not found")
-        : Ok(SpecResponse.FromDomain(spec));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Spec not found")
+            : Ok(SpecResponse.FromDomain(spec));
     }
 }
 
@@ -159,7 +159,7 @@ public class HardwareSpecController(HardwareSpecService service) : ControllerBas
         var hSpec = request.ToDomain();
 
         // invoking the use case
-        _service.Create(hSpec);
+        //_service.Create(hSpec);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -170,14 +170,14 @@ public class HardwareSpecController(HardwareSpecService service) : ControllerBas
     }
 
     [HttpGet("{hardwareId:guid}/{specId:guid}")]
-    public IActionResult Get(Guid hardwareId, Guid specId)
+    public async Task<IActionResult> Get(Guid hardwareId, Guid specId)
     {
         // invoking the use case
-        HardwareSpec? hSpec = _service.Get(hardwareId, specId);
+        HardwareSpec? hSpec = await _service.Get(hardwareId, specId);
 
         return hSpec is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "HardwareSpec not found")
-        : Ok(HardwareSpecResponse.FromDomain(hSpec));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "HardwareSpec not found")
+            : Ok(HardwareSpecResponse.FromDomain(hSpec));
     }
 }
 

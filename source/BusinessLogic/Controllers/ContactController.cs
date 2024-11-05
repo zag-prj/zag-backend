@@ -18,7 +18,7 @@ public class ContactController(ContactService contactService) : ControllerBase
         var contact = request.ToDomain();
 
         // invoking the use case
-        _contactService.Create(contact);
+        //_contactService.Create(contact);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -29,15 +29,15 @@ public class ContactController(ContactService contactService) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public IActionResult Get(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         // invoking the use case
-        var contact = _contactService.Get(id);
+        var contact = await _contactService.Get(id);
 
         // return 200 ok response
         return contact is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Contact not found")
-        : Ok(ContactResponse.FromDomain(contact));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Contact not found")
+            : Ok(ContactResponse.FromDomain(contact));
     }
 }
 

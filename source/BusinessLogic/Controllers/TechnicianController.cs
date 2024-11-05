@@ -18,7 +18,7 @@ public class TechnicianController(TechnicianService service) : ControllerBase
         var technician = request.ToDomain();
 
         // invoking the use case
-        _service.Create(technician);
+        //_service.Create(technician);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -29,15 +29,15 @@ public class TechnicianController(TechnicianService service) : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public IActionResult Get(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         // invoking the use case
-        Technician? technician = _service.Get(id);
+        Technician? technician = await _service.Get(id);
 
         // return status 200 ok response
         return technician is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Technician not found")
-        : Ok(TechnicianResponse.FromDomain(technician));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Technician not found")
+            : Ok(TechnicianResponse.FromDomain(technician));
     }
 }
 

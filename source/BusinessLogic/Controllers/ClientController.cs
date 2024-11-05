@@ -7,18 +7,19 @@ namespace source.BusinessLogic.Controllers;
 
 [ApiController]
 [Route("api/client")]
-public class ClientController(ClientService service) : ControllerBase
+public class ClientController : ControllerBase
 {
-    private readonly ClientService _service = service;
+    private readonly ClientService _service;
 
+    public ClientController(ClientService service)
+    {
+        _service = service;
+    }
     [HttpPost]
     public IActionResult Create(CreateClientRequest request)
     {
         // mapping to internal representation
         var client = request.ToDomain();
-
-        // invoking the use case
-        _service.Create(client);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -27,20 +28,18 @@ public class ClientController(ClientService service) : ControllerBase
             value: ClientResponse.FromDomain(client)
         );
     }
-
     [HttpGet("{id:guid}")]
-    public IActionResult Get(Guid id)
+    public async Task<IActionResult> Get(Guid id)
     {
         // invoking the use case
-        var client = _service.Get(id);
+        var client = await _service.Get(id);
 
         // return 200 ok response
         return client is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Client not found")
-        : Ok(ClientResponse.FromDomain(client));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "Client not found")
+            : Ok(ClientResponse.FromDomain(client));
     }
 }
-
 public record CreateClientRequest(
     string CompanyName,
     string Address,

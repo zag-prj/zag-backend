@@ -18,7 +18,7 @@ public class MaintenanceJobController(MaintenanceJobService service) : Controlle
         var job = request.ToDomain();
 
         // invoking the use case
-        _service.Create(job);
+        //_service.Create(job);
 
         // mapping to external representation
         return CreatedAtAction(
@@ -33,15 +33,15 @@ public class MaintenanceJobController(MaintenanceJobService service) : Controlle
     }
 
     [HttpGet("{clientId:guid}/{technicianId:guid}")]
-    public IActionResult Get(Guid clientId, Guid technicianId)
+    public async Task<IActionResult> Get(Guid clientId, Guid technicianId)
     {
         // invoking the use case
-        MaintenanceJob? job = _service.Get(clientId, technicianId);
+        MaintenanceJob? job = await _service.Get(clientId, technicianId);
 
         // return 200 ok response
         return job is null
-        ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "MaintenanceJob not found")
-        : Ok(MaintenanceJobResponse.FromDomain(job));
+            ? Problem(statusCode: StatusCodes.Status404NotFound, detail: "MaintenanceJob not found")
+            : Ok(MaintenanceJobResponse.FromDomain(job));
     }
 }
 
