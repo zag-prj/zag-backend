@@ -18,9 +18,13 @@ namespace source.BusinessLogic.Services
         public async Task<MaintenanceJob?> Get(Guid clientId, Guid technicianId)
         {
             var query = SqlQueries.GetMaintenanceJob;
-            var parameters = new { clientId, technicianId };
+            var parameters = new Npgsql.NpgsqlParameter[]
+            {
+                new Npgsql.NpgsqlParameter("@clientId", clientId),
+                new Npgsql.NpgsqlParameter("@technicianId", technicianId)
+            };
 
-            using (var reader = await _db.QueryAsync(query, parameters))
+            using (var reader = await _db.ExecuteQueryAsync(query, parameters))
             {
                 if (await reader.ReadAsync())
                 {

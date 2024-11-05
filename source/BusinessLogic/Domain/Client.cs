@@ -9,7 +9,7 @@ public enum ClientState
 
 public class Client
 {
-    public Guid Id { get; } = Guid.NewGuid();
+    public Guid Id { get; set; } = Guid.NewGuid();
     public ClientState State { get; set; } = ClientState.Active;
     public required string CompanyName { get; set; }
     public required string Address { get; set; }

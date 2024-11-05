@@ -17,7 +17,11 @@ namespace source.BusinessLogic.Services
         public async Task<Technician?> Get(Guid id)
         {
             var query = SqlQueries.GetTechnicianById;
-            var parameters = new { technicianId = id };
+            //var parameters = new { technicianId = id };
+            var parameters = new Npgsql.NpgsqlParameter[]
+            {
+                new Npgsql.NpgsqlParameter("@technicianId", id)
+            };
 
             using (var reader = await _db.ExecuteQueryAsync(query, parameters))
             {

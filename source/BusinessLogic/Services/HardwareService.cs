@@ -17,10 +17,13 @@ namespace source.BusinessLogic.Services
 
         public async Task<Hardware?> Get(Guid id)
         {
-            var query = SqlQueries.GetHardwareById; 
-            var parameters = new { hardwareId = id };
+            var query = SqlQueries.GetHardwareById;
+            var parameters = new Npgsql.NpgsqlParameter[]
+            {
+                new Npgsql.NpgsqlParameter("@hardwareId", id)
+            };
 
-            using (var reader = await _db.QueryAsync(query, parameters))
+            using (var reader = await _db.ExecuteQueryAsync(query, parameters))
             {
                 if (await reader.ReadAsync())
                 {
@@ -49,10 +52,14 @@ namespace source.BusinessLogic.Services
 
         public async Task<Spec?> Get(Guid id)
         {
-            var query = SqlQueries.GetSpecById; 
-            var parameters = new { specId = id };
+            var query = SqlQueries.GetSpecById;
+            //var parameters = new { specId = id };
+            var parameters = new Npgsql.NpgsqlParameter[]
+            {
+                new Npgsql.NpgsqlParameter("@specId", id)
+            };
 
-            using (var reader = await _db.QueryAsync(query, parameters))
+            using (var reader = await _db.ExecuteQueryAsync(query, parameters))
             {
                 if (await reader.ReadAsync())
                 {
@@ -79,10 +86,16 @@ namespace source.BusinessLogic.Services
 
         public async Task<HardwareSpec?> Get(Guid hardwareId, Guid specId)
         {
-            var query = SqlQueries.GetHardwareSpec; 
-            var parameters = new { hardwareId, specId };
+            var query = SqlQueries.GetHardwareSpec;
+            //var parameters = new { hardwareId, specId };
 
-            using (var reader = await _db.QueryAsync(query, parameters))
+            var parameters = new Npgsql.NpgsqlParameter[]
+            {
+                new Npgsql.NpgsqlParameter("@hardwareId", hardwareId),
+                new Npgsql.NpgsqlParameter("@specId", specId)
+            };
+
+            using (var reader = await _db.ExecuteQueryAsync(query, parameters))
             {
                 if (await reader.ReadAsync())
                 {
